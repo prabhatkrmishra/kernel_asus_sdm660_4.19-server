@@ -32,6 +32,7 @@
 	chosen {
 		stdout-path = "serial0";
 		bootargs = "rcupdate.rcu_normal_after_boot=1 quiet cgroup_disable=pressure noirqdebug";
+		rng-seed = <0x12345678>;
 	};
 
 	psci {
