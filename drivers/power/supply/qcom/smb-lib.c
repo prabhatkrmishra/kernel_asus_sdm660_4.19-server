@@ -2877,19 +2877,11 @@ int smblib_get_prop_die_health(struct smb_charger *chg,
 	return 0;
 }
 
-#ifdef CONFIG_MACH_ASUS_SDM660
-#define SDP_CURRENT_UA			3300000
-#define CDP_CURRENT_UA			3300000
-#define DCP_CURRENT_UA			3300000
-#define HVDCP_CURRENT_UA		3300000
-#define TYPEC_HIGH_CURRENT_UA		3300000
-#else
 #define SDP_CURRENT_UA			500000
 #define CDP_CURRENT_UA			1500000
-#define DCP_CURRENT_UA			1500000
+#define DCP_CURRENT_UA			2000000
 #define HVDCP_CURRENT_UA		3000000
 #define TYPEC_HIGH_CURRENT_UA		3000000
-#endif
 
 #define TYPEC_DEFAULT_CURRENT_UA	900000
 #define TYPEC_MEDIUM_CURRENT_UA		1500000
@@ -4829,11 +4821,7 @@ static void smblib_force_legacy_icl(struct smb_charger *chg, int pst)
 		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, false, 0);
 		break;
 	case POWER_SUPPLY_TYPE_USB_CDP:
-#ifdef CONFIG_MACH_ASUS_SDM660
-		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 3300000);
-#else
-		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 1500000);
-#endif
+		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, CDP_CURRENT_UA);
 		break;
 	case POWER_SUPPLY_TYPE_USB_DCP:
 #ifndef CONFIG_MACH_ASUS_SDM660
@@ -4845,7 +4833,7 @@ static void smblib_force_legacy_icl(struct smb_charger *chg, int pst)
 		if (rc < 0)
 			pr_err("%s: Couldn't read fast_CURRENT_LIMIT_CFG_REG\n",
 				__func__);
-		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 3300000);
+		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, DCP_CURRENT_UA);
 		rc = smblib_read(chg, USBIN_CURRENT_LIMIT_CFG_REG, &USBIN_1_cc);
 		if (rc < 0)
 			pr_err("%s: Couldn't read fast_CURRENT_LIMIT_CFG_REG\n",
@@ -4857,19 +4845,11 @@ static void smblib_force_legacy_icl(struct smb_charger *chg, int pst)
 		 * limit ICL to 100mA, the USB driver will enumerate to check
 		 * if this is a SDP and appropriately set the current
 		 */
-#ifdef CONFIG_MACH_ASUS_SDM660
-		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 3300000);
-#else
 		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 100000);
-#endif
 		break;
 	case POWER_SUPPLY_TYPE_USB_HVDCP:
 	case POWER_SUPPLY_TYPE_USB_HVDCP_3:
-#ifdef CONFIG_MACH_ASUS_SDM660
-		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 3300000);
-#else
 		vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 3000000);
-#endif
 		break;
 	default:
 		smblib_err(chg, "Unknown APSD %d; forcing 500mA\n", pst);
