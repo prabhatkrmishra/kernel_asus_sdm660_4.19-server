@@ -834,9 +834,7 @@ ifeq ($(CONFIG_ARCH_SDXPRAIRIE), y)
 	CONFIG_WMI_DBR_SUPPORT := n
 endif
 
-ifneq ($(CONFIG_HIF_USB), y)
-CONFIG_WLAN_LOGGING_SOCK_SVC := y
-endif
+CONFIG_WLAN_LOGGING_SOCK_SVC := n
 
 ifeq (y,$(findstring y,$(CONFIG_CNSS) $(CONFIG_CNSS_MODULE)))
 ifeq ($(CONFIG_CNSS_SDIO), y)
