@@ -4024,8 +4024,10 @@ static void smblib_handle_hvdcp_detect_done(struct smb_charger *chg,
 
 static void smblib_force_legacy_icl(struct smb_charger *chg, int pst)
 {
+#ifndef CONFIG_MACH_ASUS_SDM660
 	int typec_mode;
 	int rp_ua;
+#endif
 
 	/* while PD is active it should have complete ICL control */
 	if (chg->pd_active)
