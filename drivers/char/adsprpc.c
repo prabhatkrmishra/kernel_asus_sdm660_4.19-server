@@ -695,7 +695,8 @@ static void fastrpc_buf_free(struct fastrpc_buf *buf, int cache)
 		VERIFY(err, cid >= ADSP_DOMAIN_ID && cid < NUM_CHANNELS);
 		if (err) {
 			err = -ECHRNG;
-			pr_err("invalid channel %d set for session\n", cid);
+			pr_err("invalid channel 0x%zx set for session\n",
+				cid);
 			goto bail;
 		}
 		vmid = fl->apps->channel[cid].vmid;
@@ -2924,7 +2925,8 @@ static int fastrpc_send_cpuinfo_to_dsp(struct fastrpc_file *fl)
 	VERIFY(err, cid >= ADSP_DOMAIN_ID && cid < NUM_CHANNELS);
 	if (err) {
 		err = -ECHRNG;
-		pr_err("invalid channel %d set for session\n", cid);
+		pr_err("invalid channel 0x%zx set for session\n\n",
+			cid);
 		goto bail;
 	}
 	cpuinfo = me->channel[cid].cpuinfo_todsp;
@@ -3205,7 +3207,8 @@ static int fastrpc_mmap_on_dsp(struct fastrpc_file *fl, uint32_t flags,
 		VERIFY(err, cid >= ADSP_DOMAIN_ID && cid < NUM_CHANNELS);
 		if (err) {
 			err = -ECHRNG;
-			pr_err("invalid channel %d set for session\n", cid);
+			pr_err("invalid channel 0x%zx set for session\n",
+			cid);
 			goto bail;
 		}
 	}
@@ -3251,7 +3254,8 @@ static int fastrpc_munmap_on_dsp_rh(struct fastrpc_file *fl, uint64_t phys,
 	VERIFY(err, cid >= ADSP_DOMAIN_ID && cid < NUM_CHANNELS);
 	if (err) {
 		err = -ECHRNG;
-		pr_err("invalid channel %d set for session\n", cid);
+		pr_err("invalid channel 0x%zx set for session\n",
+			cid);
 		goto bail;
 	}
 	if (flags == ADSP_MMAP_HEAP_ADDR) {
