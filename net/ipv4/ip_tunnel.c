@@ -517,10 +517,11 @@ static int tnl_update_pmtu(struct net_device *dev, struct sk_buff *skb,
 		mtu = dst_mtu(&rt->dst) - (sizeof(struct iphdr) + tunnel_hlen);
 		mtu -= dev->type == ARPHRD_ETHER ? dev->hard_header_len : 0;
 	} else {
-		mtu = skb_dst(skb) ? dst_mtu(skb_dst(skb)) : dev->mtu;
+		mtu = skb_valid_dst(skb) ? dst_mtu(skb_dst(skb)) : dev->mtu;
 	}
 
-	skb_dst_update_pmtu_no_confirm(skb, mtu);
+	if (skb_valid_dst(skb))
+		skb_dst_update_pmtu_no_confirm(skb, mtu);
 
 	if (skb->protocol == htons(ETH_P_IP)) {
 		if (!skb_is_gso(skb) &&
@@ -533,8 +534,11 @@ static int tnl_update_pmtu(struct net_device *dev, struct sk_buff *skb,
 	}
 #if IS_ENABLED(CONFIG_IPV6)
 	else if (skb->protocol == htons(ETH_P_IPV6)) {
-		struct rt6_info *rt6 = (struct rt6_info *)skb_dst(skb);
+		struct rt6_info *rt6;
 		__be32 daddr;
+
+		rt6 = skb_valid_dst(skb) ? (struct rt6_info *)skb_dst(skb) :
+					   NULL;
 
 		daddr = md ? dst : tunnel->parms.iph.daddr;
 
