@@ -253,6 +253,24 @@ struct wmi_debug_log_info {
 	struct dentry *wmi_log_debugfs_dir;
 };
 
+#else
+/* Logging disabled: keep call sites compiling as no-ops */
+#define wmi_alert(params...) do { } while (0)
+#define wmi_err(params...) do { } while (0)
+#define wmi_warn(params...) do { } while (0)
+#define wmi_info(params...) do { } while (0)
+#define wmi_debug(params...) do { } while (0)
+#define wmi_nofl_alert(params...) do { } while (0)
+#define wmi_nofl_err(params...) do { } while (0)
+#define wmi_nofl_warn(params...) do { } while (0)
+#define wmi_nofl_info(params...) do { } while (0)
+#define wmi_nofl_debug(params...) do { } while (0)
+#define wmi_alert_rl(params...) do { } while (0)
+#define wmi_err_rl(params...) do { } while (0)
+#define wmi_warn_rl(params...) do { } while (0)
+#define wmi_info_rl(params...) do { } while (0)
+#define wmi_debug_rl(params...) do { } while (0)
+
 #endif /*WMI_INTERFACE_EVENT_LOGGING */
 
 #ifdef WLAN_OPEN_SOURCE
