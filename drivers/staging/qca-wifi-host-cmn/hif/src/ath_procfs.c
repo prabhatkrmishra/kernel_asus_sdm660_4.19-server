@@ -237,8 +237,13 @@ void athdiag_procfs_remove(void)
 	}
 }
 #else
+/* DIAG disabled: keep linkable stubs; declare prototypes explicitly since
+ * callers (if_usb.c/if_pci.c) don't include sdio/if_sdio.h */
+int athdiag_procfs_init(void *scn);
+void athdiag_procfs_remove(void);
 int athdiag_procfs_init(void *scn)
 {
+	(void)scn;
 	return 0;
 }
 void athdiag_procfs_remove(void) {}
