@@ -3,11 +3,41 @@
 / {
 cpus {
 	cpu@0 {
-		efficiency = <618>;
-		capacity-dmips-mhz = <618>;
+		efficiency = <615>;
+		capacity-dmips-mhz = <615>;
 	};
 
-	cpu@4 {
+	cpu@1 {
+		efficiency = <615>;
+		capacity-dmips-mhz = <615>;
+	};
+
+	cpu@2 {
+		efficiency = <615>;
+		capacity-dmips-mhz = <615>;
+	};
+
+	cpu@3 {
+		efficiency = <615>;
+		capacity-dmips-mhz = <615>;
+	};
+
+	cpu@100 {
+		efficiency = <1024>;
+		capacity-dmips-mhz = <1024>;
+	};
+
+	cpu@101 {
+		efficiency = <1024>;
+		capacity-dmips-mhz = <1024>;
+	};
+
+	cpu@102 {
+		efficiency = <1024>;
+		capacity-dmips-mhz = <1024>;
+	};
+
+	cpu@103 {
 		efficiency = <1024>;
 		capacity-dmips-mhz = <1024>;
 	};
@@ -23,7 +53,8 @@ energy_costs: energy-costs {
 			 1113600   80
 			 1401600  123
 			 1536000  144
-			 1612800  160
+			 1747200  160
+			 1843200  183
 		>;
 		idle-cost-data = <
 			3 2 1
@@ -35,7 +66,9 @@ energy_costs: energy-costs {
 			 1113600  232
 			 1401600  326
 			 1747200  488
-			 1804800  510
+			 1958400  510
+			 2150400  560
+			 2208000  630
 		>;
 		idle-cost-data = <
 			3 2 1
