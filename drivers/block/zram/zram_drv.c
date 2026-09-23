@@ -1851,7 +1851,7 @@ static ssize_t disksize_store(struct device *dev,
 		return -EINVAL;
 #else
 	disksize = (u64)SZ_1G * CONFIG_ZRAM_SIZE_OVERRIDE;
-	pr_info("Zram override enabled! Setting size to %li", disksize);
+	pr_info("Zram override enabled! Setting size to %llu", disksize);
 #endif
 
 	down_write(&zram->init_lock);
